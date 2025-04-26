@@ -2,18 +2,6 @@
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-// import { Icon } from 'leaflet';
-// import { useEffect } from 'react';
-
-// Fix for default marker icons
-// useEffect(() => {
-//   delete (Icon.Default.prototype as any)._getIconUrl;
-//   Icon.Default.mergeOptions({
-//     iconRetinaUrl: '/leaflet/marker-icon-2x.png',
-//     iconUrl: '/leaflet/marker-icon.png',
-//     shadowUrl: '/leaflet/marker-shadow.png',
-//   });
-// }, []);
 
 interface MapProps {
   emergencies: Array<{
@@ -35,7 +23,7 @@ export default function Map({ emergencies, onMarkerClick }: MapProps) {
       style={{ height: '100%', width: '100%', borderRadius: '0.5rem' }}
     >
       <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution='&copy; OpenStreetMap contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {emergencies.map((emergency) => (
@@ -49,7 +37,7 @@ export default function Map({ emergencies, onMarkerClick }: MapProps) {
           <Popup>
             <div>
               <h3 className="font-bold">{emergency.type}</h3>
-              <p>{emergency.description}</p>
+              <p className="text-gray-600">{emergency.description}</p>
             </div>
           </Popup>
         </Marker>

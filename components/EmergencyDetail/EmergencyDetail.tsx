@@ -1,4 +1,4 @@
-import { Emergency } from '@/types';
+import { Emergency } from '@/types/emergency';
 
 interface EmergencyDetailProps {
   emergency: Emergency | null;
@@ -8,56 +8,53 @@ interface EmergencyDetailProps {
 export default function EmergencyDetail({ emergency, onSendHelp }: EmergencyDetailProps) {
   if (!emergency) {
     return (
-      <div className="bg-white rounded-lg shadow-md p-4 h-full">
-        <p className="text-center text-gray-500">Select an emergency to view details</p>
+      <div className="bg-white rounded-lg shadow-md p-6 h-full flex items-center justify-center">
+        <p className="text-gray-500">Select an emergency to view details</p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 h-full overflow-y-auto">
-      <h2 className="text-2xl font-bold mb-4">
-        {emergency.type.charAt(0).toUpperCase() + emergency.type.slice(1)} Emergency
-      </h2>
-      
-      <div className="space-y-4">
+    <div className="bg-white rounded-lg shadow-md p-6 h-full flex flex-col overflow-y-auto">
+      <div className="space-y-4 flex-1">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold">{emergency.type}</h2>
+          <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
+            emergency.severity === 'CRITICAL' ? 'bg-red-100 text-red-700' :
+            emergency.severity === 'HIGH' ? 'bg-orange-100 text-orange-700' :
+            emergency.severity === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' :
+            'bg-green-100 text-green-700'
+          }`}>
+            {emergency.severity}
+          </span>
+        </div>
+
         <div>
-          <h3 className="font-semibold text-gray-700">Location</h3>
-          <p>{emergency.location}</p>
-          <p className="text-sm text-gray-500">
-            Coordinates: {emergency.coordinates.lat}, {emergency.coordinates.lng}
+          <h3 className="text-sm font-semibold text-gray-500">Location</h3>
+          <p className="text-gray-800">{emergency.location.address}</p>
+          <p className="text-xs text-gray-400">
+            {emergency.location.coordinates.lat}, {emergency.location.coordinates.lng}
           </p>
         </div>
 
         <div>
-          <h3 className="font-semibold text-gray-700">Description</h3>
-          <p>{emergency.description}</p>
+          <h3 className="text-sm font-semibold text-gray-500">Description</h3>
+          <p className="text-gray-800">{emergency.description}</p>
         </div>
 
         <div>
-          <h3 className="font-semibold text-gray-700">Reporter Information</h3>
-          <p>Name: {emergency.reporter.name}</p>
-          <p>Contact: {emergency.reporter.contact}</p>
+          <h3 className="text-sm font-semibold text-gray-500">Requester Info</h3>
+          <p className="text-gray-800">{emergency.requester.name}</p>
+          <p className="text-gray-600 text-sm">{emergency.requester.phone}</p>
         </div>
-
-        <div>
-          <h3 className="font-semibold text-gray-700">Status</h3>
-          <span className={`inline-block px-2 py-1 rounded ${
-            emergency.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-            emergency.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
-            'bg-green-100 text-green-800'
-          }`}>
-            {emergency.status}
-          </span>
-        </div>
-
-        <button
-          onClick={() => onSendHelp?.(emergency)}
-          className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition-colors mt-8"
-        >
-          Send Help Now
-        </button>
       </div>
+
+      <button
+        onClick={() => onSendHelp?.(emergency)}
+        className="mt-6 bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg transition-colors"
+      >
+        Send Help
+      </button>
     </div>
   );
 }
