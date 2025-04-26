@@ -1,12 +1,20 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic'; // <--- import dynamic
 import PasswordProtect from '@/components/auth/PasswordProtect';
 import EmergencyList from '@/components/EmergencyList/EmergencyList';
 import EmergencyDetail from '@/components/EmergencyDetail/EmergencyDetail';
-import Map from '@/components/Map/Map';
 import { emergencyData } from '@/data/emergency-data';
 import { Emergency } from '@/types/emergency';
+
+// ⚡ Dynamic import Map with ssr: false
+const Map = dynamic(() => import('@/components/Map/Map'), {
+  ssr: false,
+  loading: () => (
+    <div className="h-full w-full bg-gray-100 animate-pulse rounded-lg"></div>
+  ),
+});
 
 export default function DashboardPage() {
   const [emergencies, setEmergencies] = useState<Emergency[]>([]);
@@ -18,7 +26,6 @@ export default function DashboardPage() {
 
   const handleSendHelp = (emergency: Emergency) => {
     console.log('Sending help for emergency:', emergency);
-    // Here you could trigger backend dispatch logic
   };
 
   return (
@@ -26,10 +33,7 @@ export default function DashboardPage() {
       <div className="min-h-screen bg-gray-100 p-4">
         <div className="max-w-[1800px] mx-auto grid grid-cols-[1fr_400px] gap-4">
           
-          {/* Left side: Map + Emergency List */}
           <div className="flex flex-col gap-4">
-            
-            {/* Emergency Map */}
             <div className="h-[400px] bg-white rounded-lg shadow p-2">
               <h2 className="text-lg font-semibold mb-2">Austin Emergency Map</h2>
               <div className="h-full">
@@ -49,7 +53,6 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            {/* Emergency Request List */}
             <EmergencyList
               emergencies={emergencies}
               onSelectEmergency={setSelectedEmergency}
@@ -57,7 +60,6 @@ export default function DashboardPage() {
             />
           </div>
 
-          {/* Right side: Emergency Detail View */}
           <div className="h-[calc(100vh-2rem)]">
             <EmergencyDetail
               emergency={selectedEmergency}
