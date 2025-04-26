@@ -1,4 +1,4 @@
-import { Emergency } from '@/types';
+import { Emergency } from '@/types/emergency';
 
 interface EmergencyListProps {
   emergencies: Emergency[];
@@ -12,26 +12,24 @@ export default function EmergencyList({
   selectedEmergency,
 }: EmergencyListProps) {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4 h-[calc(100vh-500px)] overflow-hidden">
+    <div className="bg-white rounded-lg shadow-md p-6 h-[calc(100vh-500px)] flex flex-col">
       <h2 className="text-xl font-bold mb-4">Emergency Requests</h2>
-      <div className="overflow-y-auto h-[calc(100%-3rem)]">
+      <div className="overflow-y-auto flex-1 space-y-2">
         {emergencies.map((emergency) => (
           <div
             key={emergency.id}
             onClick={() => onSelectEmergency(emergency)}
-            className={`p-4 mb-2 rounded cursor-pointer transition-colors ${
-              selectedEmergency?.id === emergency.id ? 'ring-2 ring-blue-500' : ''
-            } ${
-              emergency.type === 'medical' ? 'bg-red-100 hover:bg-red-200' :
-              emergency.type === 'fire' ? 'bg-orange-100 hover:bg-orange-200' :
-              'bg-blue-100 hover:bg-blue-200'
+            className={`p-4 rounded-lg cursor-pointer transition-all ${
+              selectedEmergency?.id === emergency.id
+                ? 'bg-blue-100 ring-2 ring-blue-500'
+                : 'hover:bg-gray-100'
             }`}
           >
-            <h3 className="font-bold">{emergency.type}</h3>
-            <p className="text-sm text-gray-600">{emergency.location}</p>
-            <p className="text-xs text-gray-500">
-              {new Date(emergency.timestamp).toLocaleString()}
-            </p>
+            <div className="flex justify-between items-center">
+              <h3 className="font-semibold">{emergency.type}</h3>
+              <span className="text-xs text-gray-500">{new Date(emergency.createdAt).toLocaleString()}</span>
+            </div>
+            <p className="text-gray-600 text-sm">{emergency.location.address}</p>
           </div>
         ))}
       </div>

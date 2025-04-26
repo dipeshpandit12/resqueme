@@ -3,11 +3,11 @@
 import PasswordProtect from '@/components/auth/PasswordProtect';
 import EmergencyList from '@/components/EmergencyList/EmergencyList';
 import EmergencyDetail from '@/components/EmergencyDetail/EmergencyDetail';
-import { Emergency } from '@/types';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
+import { mockEmergencies } from '@/data/emergency-data';
+import { Emergency } from '@/types/emergency'; // Make sure it's imported from correct place
 
-// Dynamically import Map component to avoid SSR issues with Leaflet
 const Map = dynamic(() => import('@/components/Map/Map'), {
   ssr: false,
   loading: () => (
@@ -20,38 +20,46 @@ export default function DashboardPage() {
   const [selectedEmergency, setSelectedEmergency] = useState<Emergency | null>(null);
 
   useEffect(() => {
-    fetch('/api/emergencies')
-      .then(res => res.json())
-      .then(data => setEmergencies(data));
+    // Directly set the mock data
+    setEmergencies(mockEmergencies);
   }, []);
 
   const handleSendHelp = (emergency: Emergency) => {
-    // Implement help dispatch logic here
     console.log('Sending help for emergency:', emergency);
   };
 
   return (
     <PasswordProtect>
-      <div className="min-h-screen bg-gray-100 p-6">
-        <div className="grid grid-cols-[1fr_400px] gap-6 max-w-[1800px] mx-auto">
-          <div className="space-y-6">
-            <div className="h-[400px]">
-              <Map 
-                emergencies={emergencies}
-                onMarkerClick={(markerEmergency) => {
-                  const fullEmergency = emergencies.find(e => e.id === markerEmergency.id) || null;
-                  setSelectedEmergency(fullEmergency);
-                }}
-              />
+      <div className="min-h-screen bg-gray-100 p-4">
+        <div className="max-w-[1800px] mx-auto grid grid-cols-[1fr_400px] gap-4">
+          <div className="flex flex-col gap-4">
+            <div className="h-[400px] bg-white rounded-lg shadow p-2">
+              <h2 className="text-lg font-semibold mb-2">Austin Emergency Map</h2>
+              <div className="h-full">
+                <Map
+                  emergencies={emergencies.map((emergency) => ({
+                    id: Number(emergency.id),
+                    coordinates: emergency.location.coordinates,
+                    type: emergency.type,
+                    description: emergency.description,
+                  }))}
+                  onMarkerClick={(markerEmergency) => {
+                    const fullEmergency = emergencies.find(
+                      (e) => e.id === String(markerEmergency.id)
+                    ) || null;
+                    setSelectedEmergency(fullEmergency);
+                  }}
+                />
+              </div>
             </div>
-            <EmergencyList 
+            <EmergencyList
               emergencies={emergencies}
               onSelectEmergency={setSelectedEmergency}
               selectedEmergency={selectedEmergency}
             />
           </div>
-          <div className="h-[calc(100vh-3rem)]">
-            <EmergencyDetail 
+          <div className="h-[calc(100vh-2rem)]">
+            <EmergencyDetail
               emergency={selectedEmergency}
               onSendHelp={handleSendHelp}
             />
