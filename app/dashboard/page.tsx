@@ -5,7 +5,7 @@ import EmergencyList from '@/components/EmergencyList/EmergencyList';
 import EmergencyDetail from '@/components/EmergencyDetail/EmergencyDetail';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import { mockEmergencies } from '@/data/emergency-data';
+import { emergencyData } from '@/data/emergency-data';
 import { Emergency } from '@/types/emergency'; // Make sure it's imported from correct place
 
 const Map = dynamic(() => import('@/components/Map/Map'), {
@@ -21,7 +21,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     // Directly set the mock data
-    setEmergencies(mockEmergencies);
+    setEmergencies(emergencyData);
   }, []);
 
   const handleSendHelp = (emergency: Emergency) => {
