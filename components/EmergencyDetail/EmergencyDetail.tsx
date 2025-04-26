@@ -14,17 +14,19 @@ export default function EmergencyDetail({ emergency, onSendHelp }: EmergencyDeta
     );
   }
 
+  const severityColor = {
+    Critical: 'bg-red-100 text-red-700',
+    High: 'bg-orange-100 text-orange-700',
+    Medium: 'bg-yellow-100 text-yellow-700',
+    Low: 'bg-green-100 text-green-700',
+  }[emergency.severity];
+
   return (
     <div className="bg-white rounded-lg shadow-md p-6 h-full flex flex-col overflow-y-auto">
       <div className="space-y-4 flex-1">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold">{emergency.type}</h2>
-          <span className={`text-xs font-semibold px-3 py-1 rounded-full ${
-            emergency.severity === 'CRITICAL' ? 'bg-red-100 text-red-700' :
-            emergency.severity === 'HIGH' ? 'bg-orange-100 text-orange-700' :
-            emergency.severity === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' :
-            'bg-green-100 text-green-700'
-          }`}>
+          <span className={`text-xs font-semibold px-3 py-1 rounded-full ${severityColor}`}>
             {emergency.severity}
           </span>
         </div>
@@ -46,7 +48,17 @@ export default function EmergencyDetail({ emergency, onSendHelp }: EmergencyDeta
           <h3 className="text-sm font-semibold text-gray-500">Requester Info</h3>
           <p className="text-gray-800">{emergency.requester.name}</p>
           <p className="text-gray-600 text-sm">{emergency.requester.phone}</p>
+          {emergency.requester.medicalInfo && (
+            <p className="text-gray-500 text-xs mt-1">{emergency.requester.medicalInfo}</p>
+          )}
         </div>
+
+        {emergency.additionalNotes && (
+          <div>
+            <h3 className="text-sm font-semibold text-gray-500">Additional Notes</h3>
+            <p className="text-gray-800">{emergency.additionalNotes}</p>
+          </div>
+        )}
       </div>
 
       <button

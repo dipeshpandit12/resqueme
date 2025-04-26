@@ -37,5 +37,5 @@ export interface Emergency {
   description: string;
   createdAt: string;
   updatedAt: string;
-  additionalNotes?: string; // <- New optional field for cases like Fire/Natural Disaster
+  additionalNotes?: string;
 }

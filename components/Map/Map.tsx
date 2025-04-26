@@ -3,19 +3,24 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-// import { useEffect } from 'react';
 
 interface MapProps {
   emergencies: Array<{
-    id: number;
+    id: string;
     coordinates: { lat: number; lng: number };
     type: string;
     description: string;
+    requesterName: string;
   }>;
-  onMarkerClick?: (emergency: { id: number; coordinates: { lat: number; lng: number }; type: string; description: string }) => void;
+  onMarkerClick?: (emergency: {
+    id: string;
+    coordinates: { lat: number; lng: number };
+    type: string;
+    description: string;
+    requesterName: string;
+  }) => void;
 }
 
-// Create a simple colored circle icon dynamically
 const createDotIcon = (color: string) =>
   L.divIcon({
     className: '',
@@ -31,16 +36,15 @@ const createDotIcon = (color: string) =>
     iconAnchor: [8, 8],
   });
 
-// Get marker color by emergency type
 const getMarkerColorByType = (type: string) => {
   const colorMap: Record<string, string> = {
-    Medical: "#EF4444", // red-500
-    Fire: "#F97316",    // orange-500
-    Police: "#3B82F6",  // blue-500
-    Accident: "#EAB308", // yellow-500
-    "Natural Disaster": "#8B5CF6", // violet-500
+    Medical: "#EF4444",
+    Fire: "#F97316",
+    Police: "#3B82F6",
+    Accident: "#EAB308",
+    "Natural Disaster": "#8B5CF6",
   };
-  return colorMap[type] || "#6B7280"; // gray-500 default
+  return colorMap[type] || "#6B7280";
 };
 
 export default function Map({ emergencies, onMarkerClick }: MapProps) {
@@ -61,7 +65,7 @@ export default function Map({ emergencies, onMarkerClick }: MapProps) {
           key={emergency.id}
           position={[emergency.coordinates.lat, emergency.coordinates.lng]}
           eventHandlers={{
-            click: () => onMarkerClick && onMarkerClick(emergency),
+            click: () => onMarkerClick?.(emergency),
           }}
           icon={createDotIcon(getMarkerColorByType(emergency.type))}
         >

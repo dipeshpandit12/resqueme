@@ -1,5 +1,4 @@
-import { Emergency } from '@/types/emergency'; // Assuming Emergency type is defined correctly
-
+import { Emergency } from '@/types/emergency';
 export const emergencyData: Emergency[] = [
   {
     id: "e001",
