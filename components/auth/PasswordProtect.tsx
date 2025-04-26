@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { ShieldAlert } from 'lucide-react'; // Using Lucide React icons for the shield
 
 const DASHBOARD_PASSWORD = 'resqme2024';
 const PASSWORD_KEY = 'dashboard_auth';
@@ -54,20 +55,24 @@ export default function PasswordProtected({ children }: { children: React.ReactN
   if (!isAuthorized) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="p-8 bg-white rounded-lg shadow-md w-96">
-          <h1 className="text-2xl font-bold mb-6 text-center">ResQMe Dashboard</h1>
+        <div className="p-8 bg-white rounded-lg shadow-lg w-full max-w-sm text-center">
+          <div className="flex justify-center mb-4">
+            <ShieldAlert className="h-10 w-10 text-red-500" />
+          </div>
+          <h1 className="text-2xl font-bold mb-2">ResQMe Responder</h1>
+          <p className="text-gray-600 mb-6">Enter your responder password to access the dashboard</p>
           <form onSubmit={handleSubmit}>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 mb-4 border rounded focus:ring-2 focus:ring-blue-500 focus:outline-none"
-              placeholder="Enter dashboard password"
+              className="w-full p-2 mb-4 border rounded focus:ring-2 focus:ring-red-500 focus:outline-none"
+              placeholder="Enter password"
             />
             {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
             <button
               type="submit"
-              className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
+              className="w-full bg-red-500 text-white p-2 rounded hover:bg-red-600 transition-colors"
             >
               Access Dashboard
             </button>
@@ -82,7 +87,7 @@ export default function PasswordProtected({ children }: { children: React.ReactN
       <div className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <h1 className="text-xl font-bold">ResQMe Dashboard</h1>
+            <h1 className="text-xl font-bold">ResQMe Responder Dashboard</h1>
             <button
               onClick={handleLogout}
               className="text-gray-600 hover:text-gray-900"
