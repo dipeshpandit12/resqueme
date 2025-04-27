@@ -6,8 +6,8 @@ import { ShieldAlert } from 'lucide-react'; // Using Lucide React icons for the 
 import { Bell, Settings, LogOut } from 'lucide-react';
 
 
-const DASHBOARD_PASSWORD = 'resqme2024';
-const PASSWORD_KEY = 'dashboard_auth';
+const DASHBOARD_PASSWORD = process.env.NEXT_PUBLIC_DASHBOARD_PASSWORD;
+const PASSWORD_KEY = process.env.NEXT_PUBLIC_PASSWORD_KEY || 'dashboard_auth';
 
 export default function PasswordProtected({ children }: { children: React.ReactNode }) {
   const [isAuthorized, setIsAuthorized] = useState(false);
