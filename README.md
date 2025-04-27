@@ -27,7 +27,13 @@ ResQMe was developed during the RiverHacks hackathon 2025 in Austin. The project
 
 ## Screenshots
 
-*[Add screenshots here once available]*
+![image](https://github.com/user-attachments/assets/ce5566ba-a3fb-4c15-bd05-b68b3c16409b)
+
+
+![image](https://github.com/user-attachments/assets/7705e760-d020-4671-80c6-6306e58318a7)
+
+
+
 
 ## Installation
 
