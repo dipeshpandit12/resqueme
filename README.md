@@ -103,18 +103,13 @@ This application handles sensitive personal and medical information. Please ensu
 - **Styling**: Tailwind CSS
 - **Maps**: Leaflet, React-Leaflet
 - **Authentication**: JWT, HTTP-only cookies, Password Protection
-- **Deployment**: [Add deployment platform information]
+- **Deployment**: Vercel
 
-## 📜 License
+## 📬 Contact & Contributions
 
-[Add appropriate license information]
-
-## 📬 Contact
-
-For technical support or questions about the ResQMe Dashboard, please contact:
-[Add contact information]
+If you are interested in contributing or adding new features to the ResQMe Dashboard, you're welcome!  
+Please fork the repository, create a pull request, or contact us directly to discuss potential collaborations.
 
 ---
 
-*⚡ This dashboard is part of the City of Austin's emergency response infrastructure and is intended for official use only.*  
-*🏆 Developed during RiverHacks hackathon 2025, Austin.*
+*🏆 Developed during RiverHacks hackathon 2025, Austin,TX*
