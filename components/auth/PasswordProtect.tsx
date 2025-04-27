@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { ShieldAlert } from 'lucide-react'; // Using Lucide React icons for the shield
+import { Bell, Settings, LogOut } from 'lucide-react';
+
 
 const DASHBOARD_PASSWORD = 'resqme2024';
 const PASSWORD_KEY = 'dashboard_auth';
@@ -83,21 +85,38 @@ export default function PasswordProtected({ children }: { children: React.ReactN
   }
 
   return (
-    <div>
-      <div className="bg-white shadow-sm">
+    <div className="overflow-hidden">
+      <div className="bg-white shadow-sm bg-fixed">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <h1 className="text-xl font-bold">ResQMe Responder Dashboard</h1>
-            <button
-              onClick={handleLogout}
-              className="text-gray-600 hover:text-gray-900"
-            >
-              Logout
-            </button>
-          </div>
+          <header className="bg-white w-full border-gray-200 shadow-sm">
+            <div className="max-w-full mx-auto px-6">
+              <div className="flex justify-between items-center h-16">
+                <div className="flex items-center">
+                  <span className="text-xl font-bold text-[#dc2626]">ResQMe</span>
+                  <span className="text-sm font-medium text-gray-600 ml-4 border-l pl-4 border-gray-200">Responder Dashboard</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <button className="p-2 rounded-full text-gray-500 hover:text-[#dc2626] hover:bg-gray-100 transition-colors">
+                    <Bell size={20} />
+                  </button>
+                  <button className="p-2 rounded-full text-gray-500 hover:text-[#dc2626] hover:bg-gray-100 transition-colors">
+                    <Settings size={20} />
+                  </button>
+                  <button 
+                    onClick={handleLogout}
+                    className="p-2 rounded-full text-gray-500 hover:text-[#dc2626] hover:bg-gray-100 transition-colors"
+                  >
+                    <LogOut size={18} className="mr-2" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </header>
         </div>
       </div>
-      {children}
+      <div className="overflow-hidden">
+        {children}
+      </div>
     </div>
   );
 }
